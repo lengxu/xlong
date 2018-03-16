@@ -13,7 +13,7 @@ import org.json4s.Extraction._
 import org.json4s.jackson.JsonMethods._
 import redis.clients.jedis.Jedis
 import uyun.xianglong.examples.sclaz.{JarUtils, Utils}
-import uyun.xianglong.examples.sclaz.benchmark.{KafkaConfig, Model, ModelDetail, RedisUtils}
+
 
 object FlinkNetworkModelBenchmark {
 
