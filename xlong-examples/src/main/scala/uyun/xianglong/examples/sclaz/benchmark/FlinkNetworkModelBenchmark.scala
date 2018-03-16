@@ -61,7 +61,7 @@ object FlinkNetworkModelBenchmark {
       .rebalance
       .map(json => mapModel(json))
       .keyBy(_._1.device)
-      .timeWindowAll(Time.seconds(1))
+      .timeWindow(Time.seconds(1))
       .reduce((m1, m2) => doSum(m1, m2))
       .map(kv => joinFromRedis(kv))
       .map(tuple => {
