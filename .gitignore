@@ -1,0 +1,15 @@
+# Standard sbt ignores
+target/
+product/
+src_managed/
+project/boot/
+test-reports/
+*.log*
+*.patch
+.ensime*
+.idea*
+.vagrant
+metastore_db
+derby.log
+*.iml
+*/*.iml
