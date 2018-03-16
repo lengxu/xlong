@@ -13,13 +13,14 @@ package object benchmark {
 
   case class ModelDetail(device: String, port: String, comment: String) extends Serializable
 
+
   implicit val fmt: DefaultFormats = DefaultFormats
 
   implicit val redisConfig: RedisConfig = RedisConfig("10.1.51.236")
 
   implicit val generateConfig: GenerateConfig = GenerateConfig(
     deviceCount = 100000,
-    rateLimit = 150000
+    rateLimit = 330000
   )
 
   implicit val kafkaConfig: KafkaConfig = KafkaConfig(
