@@ -73,10 +73,13 @@ object GraphOutput {
   private def js = read("benchmark/echarts.min.js")
 
   def main(args: Array[String]): Unit = {
-    val group = FlinkNetworkModelBenchmark.readJson("test")
-//    val pointGroup = PointGroup("test", Seq(10000.1, 20000.2, 30000.3))
-//    val pointGroup2 = PointGroup("test2", Seq(20000.1, 10000.1, 30000.3))
-    val output = Output("test", Seq(group), 5, 120)
+    val group = FlinkNetworkModelBenchmark.readJson("checkpoint=-1")
+    val group2 = FlinkNetworkModelBenchmark.readJson("checkpoint=10s")
+    val group3 = FlinkNetworkModelBenchmark.readJson("checkpoint=30s")
+    val group4 = FlinkNetworkModelBenchmark.readJson("checkpoint=60s")
+    //    val pointGroup = PointGroup("test", Seq(10000.1, 20000.2, 30000.3))
+    //    val pointGroup2 = PointGroup("test2", Seq(20000.1, 10000.1, 30000.3))
+    val output = Output("test", Seq(group, group2, group3, group4), 5, 120)
     writeTo("D:/Temp", Seq(output, output))
     Desktop.getDesktop.open(new File("D:/Temp/report.html"))
   }
