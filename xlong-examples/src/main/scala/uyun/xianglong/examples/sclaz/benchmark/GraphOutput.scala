@@ -40,7 +40,7 @@ object GraphOutput {
   def writeTo(dir: String, outputs: Seq[Output]): Unit = {
     val builder = new StringBuilder()
     outputs.foreach { output =>
-      val xAxis = XAxis(1 to output.sampleNum map { i => output.sampleSec * i + "sec" })
+      val xAxis = XAxis(1 to output.sampleNum map { i => output.sampleSec * i + "s" })
       val series = output.groups.map { group =>
         val name = group.title
         val data = group.points.map(_.value)
@@ -73,9 +73,10 @@ object GraphOutput {
   private def js = read("benchmark/echarts.min.js")
 
   def main(args: Array[String]): Unit = {
-    val pointGroup = PointGroup("test", Seq(10000.1, 20000.2, 30000.3))
-    val pointGroup2 = PointGroup("test2", Seq(20000.1, 10000.1, 30000.3))
-    val output = Output("test", Seq(pointGroup, pointGroup2), 100, 3)
+    val group = FlinkNetworkModelBenchmark.readJson("test")
+//    val pointGroup = PointGroup("test", Seq(10000.1, 20000.2, 30000.3))
+//    val pointGroup2 = PointGroup("test2", Seq(20000.1, 10000.1, 30000.3))
+    val output = Output("test", Seq(group), 5, 120)
     writeTo("D:/Temp", Seq(output, output))
     Desktop.getDesktop.open(new File("D:/Temp/report.html"))
   }

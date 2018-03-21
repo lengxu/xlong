@@ -108,7 +108,7 @@ object FlinkNetworkModelBenchmark {
   }
 
   def readJson(title: String): PointGroup = {
-    extract(parse(Files.asCharSource(new File(reportConfig.dir + "/" + title), Charsets.UTF_8).read()))
+    extract[PointGroup](parse(Files.asCharSource(new File(reportConfig.dir + "/" + title), Charsets.UTF_8).read()))
   }
 
   private def toGroup(title: String, metrics: Seq[Double]): PointGroup = {

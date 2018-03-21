@@ -32,8 +32,8 @@ package object benchmark {
     host = "10.1.62.236",
     port = 8081,
     sampleInterval = TimeUnit.SECONDS.toMillis(5),
-    sampleTimes = 240,
-    firstSampleTime = TimeUnit.MINUTES.toMillis(5)
+    sampleTimes = 120,
+    firstSampleTime = TimeUnit.MINUTES.toMillis(3)
   )
 
   implicit val kafkaConfig: KafkaConfig = KafkaConfig(
