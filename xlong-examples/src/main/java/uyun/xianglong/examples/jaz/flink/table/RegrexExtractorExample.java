@@ -1,6 +1,7 @@
 package uyun.xianglong.examples.jaz.flink.table;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.flink.api.common.functions.FilterFunction;
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
@@ -53,27 +54,27 @@ public class RegrexExtractorExample {
         String[] names = {"origin_msg", "timestamp", "sn", "recordType", "entryId", "stepId", "errMsg"};
 
         RowTypeInfo typeInfo = new RowTypeInfo(types, names);
-        DataStream<Row> logInfos = env.addSource(consumer010).map(new MapFunction<String, Row>() {
-            @Override
-            public Row map(String value) throws Exception {
-                Pattern pattern = Pattern.compile(regrex);
-                Matcher m = pattern.matcher(value);
-                if(m.find()){
-                    String origin_msg = m.group(0);
-                    String timestamp = m.group(1);
-                    String serialNum = m.group(2);
-                    Long sn = null;
-                    if(StringUtils.isNotBlank(serialNum)){
-                       sn = Long.parseLong(serialNum);
-                    }
-                    String recordType = m.group(3);
-                    String entryId = m.group(4);
-                    String stepId = m.group(5);
-                    String errMsg = m.group(6);
-                    return Row.of(origin_msg, timestamp, sn, recordType, entryId, stepId, errMsg);
+        DataStream<Row> logInfos = env.addSource(consumer010).map((MapFunction<String, Row>) value -> {
+            Pattern pattern = Pattern.compile(regrex);
+            Matcher m = pattern.matcher(value);
+            if(m.find()){
+                String origin_msg = m.group(0);
+                String timestamp = m.group(1);
+                String serialNum = m.group(2);
+                Long sn = null;
+                if(StringUtils.isNotBlank(serialNum)){
+                   sn = Long.parseLong(serialNum);
                 }
-                return Row.of("","",-1L,"","","","");
+                String recordType = m.group(3);
+                String entryId = m.group(4);
+                String stepId = m.group(5);
+                String errMsg = m.group(6);
+                return Row.of(origin_msg, timestamp, sn, recordType, entryId, stepId, errMsg);
             }
+            return Row.of("","",-1L,"","","","");
+        }).filter((FilterFunction<Row>) value -> {
+            String field = value.getField(0).toString();
+            return StringUtils.isNotBlank(field);
         }).returns(typeInfo);
         Table ptable = tableEnv.fromDataStream(logInfos, "origin_msg, timestamp, sn, recordType, entryId, stepId, errMsg");
         tableEnv.registerTable("logInfos", ptable);

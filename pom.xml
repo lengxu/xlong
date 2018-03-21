@@ -2,6 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>uyun.whale</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.2.6</version>
+    </parent>
+
     <groupId>uyun.xlong</groupId>
     <artifactId>xlong</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -9,6 +15,7 @@
         <module>xlong-sdk</module>
         <module>xlong-core</module>
         <module>xlong-examples</module>
+        <module>xlong-app</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -26,7 +33,8 @@
         <alluxio.version>1.6.0</alluxio.version>
         <flink.version>1.4.2</flink.version>
 
-        <springboot.version>2.0.0</springboot.version>
+        <springboot.version>1.5.9.RELEASE</springboot.version>
+        <util-shell.version>1.0.0-SNAPSHOT</util-shell.version>
         <druid.version>1.1.4</druid.version>
         <mysql.version>5.1.44</mysql.version>
         <jedis.version>2.7.3</jedis.version>
@@ -126,6 +134,25 @@
                 <groupId>uyun.xlong</groupId>
                 <artifactId>xlong-sdk</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <!-- Spring Boot-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${springboot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>4.3.7.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${springboot.version}</version>
             </dependency>
 
         </dependencies>
