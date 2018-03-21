@@ -29,11 +29,11 @@ package object benchmark {
 
   implicit val reportConfig: ReportConfig = ReportConfig(
     dir = "D:/Temp/flink_bench",
-    host = "10.1.62.236",
+    host = "server03",
     port = 8081,
     sampleInterval = TimeUnit.SECONDS.toMillis(5),
     sampleTimes = 120,
-    firstSampleTime = TimeUnit.MINUTES.toMillis(3)
+    firstSampleTime = TimeUnit.MINUTES.toMillis(5)
   )
 
   implicit val kafkaConfig: KafkaConfig = KafkaConfig(

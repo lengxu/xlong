@@ -122,8 +122,8 @@ object FlinkNetworkModelBenchmark {
         benchmark(config)
       }
     }.start()
-    val data = FlinkMonitor.monitor("server03", 8081, reportConfig.sampleInterval, reportConfig.sampleTimes, reportConfig.firstSampleTime)
-    Utils.cancelAllJobs("server03", 8081)
+    val data = FlinkMonitor.monitor(reportConfig.host, 8081, reportConfig.sampleInterval, reportConfig.sampleTimes, reportConfig.firstSampleTime)
+    Utils.cancelAllJobs(reportConfig.host, 8081)
     val group = toGroup(title, data)
     writeAsJson(group)
     group
@@ -131,8 +131,8 @@ object FlinkNetworkModelBenchmark {
 
 
   def benchmark(config: FlinkBenchmarkConfig): Unit = {
-    Utils.cancelAllJobs("server03", 8081)
-    val env = StreamExecutionEnvironment.createRemoteEnvironment("server03", 6123, JarUtils.getJars: _*)
+    Utils.cancelAllJobs(reportConfig.host, 8081)
+    val env = StreamExecutionEnvironment.createRemoteEnvironment(reportConfig.host, 6123, JarUtils.getJars: _*)
     if (config.checkPointInterval > 0) {
       env.enableCheckpointing(config.checkPointInterval, CheckpointingMode.EXACTLY_ONCE)
     }

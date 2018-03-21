@@ -8,7 +8,7 @@ import com.google.common.io.ByteStreams
 
 object FlinkMonitor {
 
-  def monitor(host: String, port: Int, interval: Long, times: Int, firstWaiting: Long = TimeUnit.MINUTES.toMillis(1)): Seq[Double] = {
+  def monitor(host: String, port: Int, interval: Long, times: Int, firstWaiting: Long): Seq[Double] = {
     Thread.sleep(firstWaiting)
     0 until times map { _ =>
       val tps = getTps(host, port)
