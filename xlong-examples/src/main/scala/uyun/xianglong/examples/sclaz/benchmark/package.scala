@@ -1,5 +1,7 @@
 package uyun.xianglong.examples.sclaz
 
+import java.util.concurrent.TimeUnit
+
 import org.json4s.DefaultFormats
 import uyun.xianglong.examples.sclaz.benchmark.RedisUtils.RedisConfig
 
@@ -13,6 +15,8 @@ package object benchmark {
 
   case class ModelDetail(device: String, port: String, comment: String) extends Serializable
 
+  case class ReportConfig(dir: String, host: String, port: Int, sampleInterval: Long, sampleTimes: Int, firstSampleTime: Long)
+
 
   implicit val fmt: DefaultFormats = DefaultFormats
 
@@ -21,6 +25,15 @@ package object benchmark {
   implicit val generateConfig: GenerateConfig = GenerateConfig(
     deviceCount = 100000,
     rateLimit = 330000
+  )
+
+  implicit val reportConfig: ReportConfig = ReportConfig(
+    dir = "D:/Temp/flink_bench",
+    host = "10.1.62.236",
+    port = 8081,
+    sampleInterval = TimeUnit.SECONDS.toMillis(5),
+    sampleTimes = 240,
+    firstSampleTime = TimeUnit.MINUTES.toMillis(5)
   )
 
   implicit val kafkaConfig: KafkaConfig = KafkaConfig(

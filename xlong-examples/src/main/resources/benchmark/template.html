@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="echarts.min.js"></script>
+</head>
+<body>
+<pre>
+    配置:
+    Flink JobManager Memory : 1024M
+    Flink TaskManger Memory : 4096M
+    Flink Slot : 16
+    cpu : 4核 Intel(R) Xeon(R) CPU E5-2620 v3 @ 2.40GHz
+    kafka partition : 4
+    流程:
+    向kafka不断发送内容为{device:$device,input:100.1,output:100.1}的json,device种类有10万个,循环发送
+    flink从kafka接受并解析json,
+    然后以1秒为窗口根据device聚合input和output，进行sum，
+    完成后根据device从redis join内容为{device:$device,port:8080,comment:'comment'}的信息
+    然后count后输出
+    每个步骤的结果数据会附带一个Metric(sendTime,mapTime,reduceTime,joinTime)的对象进行一些额外的统计
+    以下是结果数据
+</pre>
+<br/>
+$templates
+</body>
+</html>

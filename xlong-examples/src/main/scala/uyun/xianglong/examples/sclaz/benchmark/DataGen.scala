@@ -1,7 +1,5 @@
 package uyun.xianglong.examples.sclaz.benchmark
 
-import java.util.concurrent.atomic.AtomicBoolean
-
 import com.google.common.util.concurrent.RateLimiter
 import org.json4s.Extraction._
 import org.json4s.jackson.JsonMethods._
@@ -27,6 +25,11 @@ object DataGen {
         KafkaUtils.send(compact(decompose(Model(s"device_$i", System.currentTimeMillis(), 100.001, 100.001))))
       }
     }
+  }
+
+  def main(args: Array[String]) {
+    writeDetailToRedis()
+    writeModelToKafka()
   }
 
 }
