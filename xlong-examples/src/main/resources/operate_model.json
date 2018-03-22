@@ -1,0 +1,57 @@
+{
+  "name":"kafka输入",
+  "image":"images/kafka_input.png",
+  "operateType":"uyun.xianglong.core.operate.KafkaInputOperate",
+  "operateCategory":"MULTI_INPUT_OPERATE",
+  "operateParameters": {
+    "name": {
+      "desc": "操作名称",
+      "valueType": "STRING",
+      "isRequired": true,
+      "defaultValue": "",
+      "validValues": []
+    },
+    "operateId": {
+      "desc": "操作算子id",
+      "valueType": "INTEGER",
+      "isRequired": true,
+      "defaultValue": "",
+      "validValues": []
+    },
+    "prevOperateIds": {
+      "desc": "前面节点id",
+      "valueType": "STRING",
+      "isRequired": true,
+      "defaultValue": "",
+      "validValues": []
+    },
+    "bootstrap.servers": {
+      "desc": "连接的kafka 节点地址",
+      "valueType": "STRING",
+      "isRequired": true,
+      "defaultValue": "",
+      "validValues": []
+    },
+    "group.id": {
+      "desc": "连接的kafka 消费者组id",
+      "valueType": "STRING",
+      "isRequired": true,
+      "defaultValue": "",
+      "validValues": []
+    },
+    "topic": {
+      "desc": "连接的kafka Topic名称",
+      "valueType": "STRING",
+      "isRequired": true,
+      "defaultValue": "",
+      "validValues": []
+    },
+    "outputDatasetName": {
+      "desc": "输出字符集名称",
+      "valueType": "STRING",
+      "isRequired": true,
+      "defaultValue": "",
+      "validValues": []
+    }
+  }
+}
