@@ -64,15 +64,15 @@ object FlinkNetworkModelBenchmark {
   private val reportConfig = implicitly[ReportConfig]
 
   def main(args: Array[String]) {
+    Thread.sleep(TimeUnit.HOURS.toMillis(2))
     Utils.cancelAllJobs(reportConfig.host, reportConfig.port)
-    new File(reportConfig.dir).mkdirs()
     val checkpoint0s = startBenchmark("checkpoint=-1", FlinkBenchmarkConfig(checkPointInterval = -1))
     val checkpoint10s = startBenchmark("checkpoint=10s", FlinkBenchmarkConfig(checkPointInterval = TimeUnit.SECONDS.toMillis(10)))
     val checkPoint30s = startBenchmark("checkpoint=30s", FlinkBenchmarkConfig(checkPointInterval = TimeUnit.SECONDS.toMillis(30)))
     val checkpoint60s = startBenchmark("checkpoint=60s", FlinkBenchmarkConfig(checkPointInterval = TimeUnit.SECONDS.toMillis(60)))
     val redisPipeline = startBenchmark("redisMode=pipeline", FlinkBenchmarkConfig(redisMode = RedisMode.PIPELINE))
     val redisExecute = startBenchmark("redisMode=execute", FlinkBenchmarkConfig(redisMode = RedisMode.EXECUTE))
-    val redisMock = startBenchmark("redisMode=mock", FlinkBenchmarkConfig(redisMode = RedisMode.EXECUTE))
+    val redisMock = startBenchmark("redisMode=mock", FlinkBenchmarkConfig(redisMode = RedisMode.MOCK))
     val p1 = startBenchmark("parallelism=1", FlinkBenchmarkConfig(parallelism = 1))
     val p4 = startBenchmark("parallelism=4", FlinkBenchmarkConfig(parallelism = 4))
     val p8 = startBenchmark("parallelism=8", FlinkBenchmarkConfig(parallelism = 8))
@@ -123,7 +123,6 @@ object FlinkNetworkModelBenchmark {
       }
     }.start()
     val data = FlinkMonitor.monitor(reportConfig.host, 8081, reportConfig.sampleInterval, reportConfig.sampleTimes, reportConfig.firstSampleTime)
-    Utils.cancelAllJobs(reportConfig.host, 8081)
     val group = toGroup(title, data)
     writeAsJson(group)
     group

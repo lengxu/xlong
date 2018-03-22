@@ -10,6 +10,7 @@ import org.apache.commons.io.Charsets
 import org.json4s.Extraction._
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
+import uyun.xianglong.examples.sclaz.benchmark.FlinkNetworkModelBenchmark.reportConfig
 
 import scala.language.implicitConversions
 
@@ -38,6 +39,7 @@ object GraphOutput {
 
 
   def writeTo(dir: String, outputs: Seq[Output]): Unit = {
+    new File(dir).mkdirs()
     val builder = new StringBuilder()
     outputs.foreach { output =>
       val xAxis = XAxis(1 to output.sampleNum map { i => output.sampleSec * i + "s" })
@@ -73,15 +75,41 @@ object GraphOutput {
   private def js = read("benchmark/echarts.min.js")
 
   def main(args: Array[String]): Unit = {
-    val group = FlinkNetworkModelBenchmark.readJson("checkpoint=-1")
-    val group2 = FlinkNetworkModelBenchmark.readJson("checkpoint=10s")
-    val group3 = FlinkNetworkModelBenchmark.readJson("checkpoint=30s")
-    val group4 = FlinkNetworkModelBenchmark.readJson("checkpoint=60s")
-    //    val pointGroup = PointGroup("test", Seq(10000.1, 20000.2, 30000.3))
-    //    val pointGroup2 = PointGroup("test2", Seq(20000.1, 10000.1, 30000.3))
-    val output = Output("test", Seq(group, group2, group3, group4), 5, 120)
-    writeTo("D:/Temp", Seq(output, output))
-    Desktop.getDesktop.open(new File("D:/Temp/report.html"))
+    val checkpoint0s = FlinkNetworkModelBenchmark.readJson("checkpoint=-1")
+    val checkpoint10s = FlinkNetworkModelBenchmark.readJson("checkpoint=10s")
+    val checkPoint30s = FlinkNetworkModelBenchmark.readJson("checkpoint=30s")
+    val checkpoint60s = FlinkNetworkModelBenchmark.readJson("checkpoint=60s")
+    val redisPipeline = FlinkNetworkModelBenchmark.readJson("redisMode=pipeline")
+    val redisExecute = FlinkNetworkModelBenchmark.readJson("redisMode=execute")
+    val redisMock = FlinkNetworkModelBenchmark.readJson("redisMode=mock")
+    val p1 = FlinkNetworkModelBenchmark.readJson("parallelism=1")
+    val p4 = FlinkNetworkModelBenchmark.readJson("parallelism=4")
+    val p8 = FlinkNetworkModelBenchmark.readJson("parallelism=8")
+    val p16 = FlinkNetworkModelBenchmark.readJson("parallelism=16")
+
+    val all = Output("all", Seq(
+      checkpoint0s,
+      checkpoint10s,
+      checkPoint30s,
+      checkpoint60s,
+      redisPipeline,
+      redisExecute,
+      redisMock,
+      p1, p4, p8, p16
+    ), reportConfig.sampleInterval / 1000, reportConfig.sampleTimes)
+    val checkpointCompare = Output("checkpoint对比", Seq(
+      checkpoint0s, checkpoint10s, checkPoint30s, checkpoint60s
+    ), reportConfig.sampleInterval / 1000, reportConfig.sampleTimes)
+    val redisCompare = Output("redis对比", Seq(
+      redisPipeline,
+      redisExecute,
+      redisMock
+    ), reportConfig.sampleInterval / 1000, reportConfig.sampleTimes)
+    val parallelismCompare = Output("并行度对比", Seq(p1, p4, p8, p16),
+      reportConfig.sampleInterval / 1000, reportConfig.sampleTimes)
+
+    GraphOutput.writeTo(reportConfig.dir, Seq(all, checkpointCompare, redisCompare, parallelismCompare))
+    Desktop.getDesktop.open(new File(reportConfig.dir + "/report.html"))
   }
 
 }
