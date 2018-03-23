@@ -42,6 +42,14 @@
         <google.guava.version>23.0</google.guava.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>artima</id>
+            <name>Artima Maven Repository</name>
+            <url>http://repo.artima.com/releases</url>
+        </repository>
+    </repositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -167,6 +175,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.scalactic</groupId>
+            <artifactId>scalactic_${scala.binary.version}</artifactId>
+            <version>3.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.binary.version}</artifactId>
+            <version>3.0.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
@@ -212,6 +232,13 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <compilerPlugins>
+                        <compilerPlugin>
+                            <groupId>com.artima.supersafe</groupId>
+                            <artifactId>supersafe_${scala.version}</artifactId>
+                            <version>1.1.5</version>
+                        </compilerPlugin>
+                    </compilerPlugins>
                     <scalaVersion>${scala.version}</scalaVersion>
                     <args>
                         <arg>-target:jvm-1.8</arg>
