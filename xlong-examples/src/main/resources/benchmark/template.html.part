@@ -1,5 +1,5 @@
 <h1>$title</h1>
-<div id="$divId" style="width: 800px;height:600px;"></div>
+<div id="$divId" style="width: 1200px;height:600px;"></div>
 <script type="text/javascript">
     var myChart = echarts.init(document.getElementById("$divId"));
     option = {
