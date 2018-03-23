@@ -7,7 +7,7 @@ package uyun.xianglong.sdk.datastruct
   * Time : 21:00
   * Desc : 数据集
   */
-case class DataCollect(val fieldNames: Array[String], val fieldTypes: Array[DataType.DataType], val values: AnyRef) extends Serializable {
+case class DataCollection(val fieldNames: Array[String], val fieldTypes: Array[DataType.DataType], val values: AnyRef) extends Serializable {
 
   def getFieldNames:Array[String] = fieldNames
 

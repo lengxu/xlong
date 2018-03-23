@@ -83,5 +83,10 @@
             <version>4.5.2</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>uyun.xlong</groupId>
+            <artifactId>xlong-sdk</artifactId>
+        </dependency>
     </dependencies>
 </project>

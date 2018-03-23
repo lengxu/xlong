@@ -9,7 +9,7 @@ import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironm
 import org.apache.flink.table.api.{Table, TableEnvironment}
 import org.apache.flink.types.Row
 import org.scalatest.{FlatSpec, Matchers}
-import uyun.xianglong.sdk.datastruct.{DataCollect, DataType}
+import uyun.xianglong.sdk.datastruct.{DataCollection, DataType}
 
 /**
   * Created By wuhuahe
@@ -20,7 +20,7 @@ import uyun.xianglong.sdk.datastruct.{DataCollect, DataType}
   */
 class JsonParserOperate(val env: StreamExecutionEnvironment, val fieldNames:Array[String], val fieldTypes:Array[String]) {
 
-  def process(dataCollect:DataCollect): DataCollect ={
+  def process(dataCollect:DataCollection): DataCollection ={
     val persons: DataStream[Row] = dataCollect.values.asInstanceOf[DataStream[Row]]
     val types:Array[TypeInformation[_]]  = fieldTypes.map(t => {
       t match {
@@ -70,12 +70,12 @@ class JsonParserOperate(val env: StreamExecutionEnvironment, val fieldNames:Arra
       newRow
     })(new RowTypeInfo(types, fieldNames))
 
-    DataCollect(fieldNames,DataType.getFieldTypesFromStringArr(fieldTypes), ps)
+    DataCollection(fieldNames,DataType.getFieldTypesFromStringArr(fieldTypes), ps)
   }
 }
 
 class JsonParserOperateSpec extends FlatSpec with Matchers{
-  "process" should "     " in {
+  "process" should "  jsonParserOp   " in {
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     val tEnv = TableEnvironment.getTableEnvironment(env)
 
@@ -90,7 +90,7 @@ class JsonParserOperateSpec extends FlatSpec with Matchers{
     val pee: DataStream[Row] = persons.map(line => Row.of(line))
     val jsonParserOp = new JsonParserOperate(env, Array[String]("memberId","name","gender","age","ocupation"),
       Array[String]("STRING","STRING","STRING","INTEGER","STRING"))
-    val dataCollect = jsonParserOp.process(DataCollect(Array[String]("text"), Array[DataType.DataType](DataType.STRING), pee))
+    val dataCollect = jsonParserOp.process(DataCollection(Array[String]("text"), Array[DataType.DataType](DataType.STRING), pee))
     dataCollect.getFieldNames.foreach(println)
     dataCollect.getFieldTypes.foreach(println)
 
