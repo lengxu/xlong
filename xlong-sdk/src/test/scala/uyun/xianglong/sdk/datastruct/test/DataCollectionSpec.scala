@@ -1,7 +1,7 @@
 package uyun.xianglong.sdk.datastruct.test
 
 import org.scalatest.{FlatSpec, Matchers}
-import uyun.xianglong.sdk.datastruct.{DataCollect, DataType}
+import uyun.xianglong.sdk.datastruct.{DataCollection, DataType}
 
 /**
   * Created By wuhuahe
@@ -10,7 +10,7 @@ import uyun.xianglong.sdk.datastruct.{DataCollect, DataType}
   * Time : 16:25
   * Desc :
   */
-class DataCollectSpec extends FlatSpec with Matchers {
+class DataCollectionSpec extends FlatSpec with Matchers {
   val fieldNameWithType = Map[String,DataType.DataType](
     "name" -> DataType.STRING,
     "age" -> DataType.INTEGER,
@@ -34,7 +34,7 @@ class DataCollectSpec extends FlatSpec with Matchers {
     ("李四",35,'M',35656.3),
     ("王五",45,'M',343456.72)
   )
-  val dataCollect = DataCollect(fieldNames, fieldTypes,values)
+  val dataCollect = DataCollection(fieldNames, fieldTypes,values)
 
   "getFieldNames" should "return an Array of String" in {
     dataCollect.getFieldNames should be (Array[String]("name","age","gender","salary"))
