@@ -65,7 +65,7 @@ object StreamTopNExample {
 
     override def apply(window: TimeWindow, values: lang.Iterable[Row], out: Collector[Seq[Row]]): Unit = {
       import scala.collection.JavaConversions._
-      val topN = values.map(ComparableRow(_, index)).toSeq.sorted.reverse.slice(0, n).map(_.row)
+      val topN = values.map(ComparableRow(_, index)).toSeq.sorted.slice(0, n).map(_.row)
       out.collect(topN)
     }
   }
