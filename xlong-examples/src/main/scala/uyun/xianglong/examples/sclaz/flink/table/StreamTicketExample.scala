@@ -36,7 +36,6 @@ object StreamTicketExample {
     val source = env
       .addSource(new LocalSource)
       .assignAscendingTimestamps(_.updateTime)
-      .keyBy(_.ticket)
     import org.apache.flink.table.api.scala._
 
     val table = tnv.fromDataStream(source, 'ticket, 'state, 'createTime, UnresolvedFieldReference("updateTime").rowtime)
