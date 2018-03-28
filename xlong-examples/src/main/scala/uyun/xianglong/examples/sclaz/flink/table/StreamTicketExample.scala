@@ -2,7 +2,9 @@ package uyun.xianglong.examples.sclaz.flink.table
 
 import java.lang
 import java.sql.Timestamp
+import java.time.{Instant, LocalDate, OffsetTime, ZoneOffset}
 import java.util.Random
+import java.util.concurrent.TimeUnit
 
 import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.streaming.api.TimeCharacteristic
@@ -50,7 +52,7 @@ object StreamTicketExample {
   case class LastAccumulator(var value: Any, var time: Long)
 
   class CastTimeToLong extends ScalarFunction with Serializable {
-    def eval(timestamp: Timestamp): Long = timestamp.getTime
+    def eval(timestamp: Timestamp): Long = timestamp.getTime + TimeUnit.HOURS.toMillis(8)
   }
 
   class TimestampLastAgg extends AggregateFunction[Any, LastAccumulator] with Serializable {
