@@ -1,15 +1,17 @@
 package uyun.xianglong.sdk.datastruct.test
 
-import java.util.Date
+import java.util
 
-import com.alibaba.fastjson.JSON
-import org.apache.flink.api.common.typeinfo.{BasicTypeInfo, TypeInformation}
+import com.google.gson.Gson
+import org.apache.flink.api.common.typeinfo.{BasicTypeInfo, TypeInformation, Types}
 import org.apache.flink.api.java.typeutils.RowTypeInfo
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
 import org.apache.flink.table.api.{Table, TableEnvironment}
 import org.apache.flink.types.Row
 import org.scalatest.{FlatSpec, Matchers}
 import uyun.xianglong.sdk.datastruct.{DataCollection, DataType}
+
+import scala.language.implicitConversions
 
 /**
   * Created By wuhuahe
@@ -45,27 +47,28 @@ class JsonParserOperate(val env: StreamExecutionEnvironment, val fieldNames:Arra
     val innerFieldTypes = fieldTypes
     val fieldNamesWithTypes = fieldNames.zip(fieldTypes)
     val ps: DataStream[Row] = persons.map(row =>{
-      val json = JSON.parseObject(row.getField(0).asInstanceOf[String])
+      val json = new Gson().fromJson(row.getField(0).asInstanceOf[String], classOf[util.Map[String, Object]])
       //{"memberId":"00001","name":"Merry","gender":"F","age":34,"ocupation":"Doctor"}
       var newRow = new Row(innerFieldNames.length)
       for(((fieldName,fieldType),index) <- fieldNamesWithTypes.zipWithIndex) yield {
         val v = json.get(fieldName)
-        fieldType match {
-          case "STRING" => newRow.setField(index ,v.asInstanceOf[String])
-          case "BYTE" => newRow.setField(index ,v.asInstanceOf[Byte])
-          case "SHORT" => newRow.setField(index ,v.asInstanceOf[Short])
-          case "INTEGER" => newRow.setField(index ,v.asInstanceOf[Int])
-          case "DOUBLE" => newRow.setField(index ,v.asInstanceOf[Double])
-          case "FLOAT" => newRow.setField(index ,v.asInstanceOf[Float])
-          case "LONG" => newRow.setField(index ,v.asInstanceOf[Long])
-          case "CHAR" => newRow.setField(index ,v.asInstanceOf[Char])
-          case "DATE" => newRow.setField(index ,v.asInstanceOf[Date])
-          case "BOOLEAN" => newRow.setField(index ,v.asInstanceOf[Boolean])
-          case "BIGINT" => newRow.setField(index ,v.asInstanceOf[BigInt])
-          case "BIGDEC" => newRow.setField(index ,v.asInstanceOf[BigDecimal])
-          case "VOID" => newRow.setField(index ,v.asInstanceOf[Void])
-          case _ => newRow.setField(index ,v.asInstanceOf[String])
-        }
+//        fieldType match {
+//          case "STRING" => newRow.setField(index ,v.asInstanceOf[String])
+//          case "BYTE" => newRow.setField(index ,v.asInstanceOf[Byte])
+//          case "SHORT" => newRow.setField(index ,v.asInstanceOf[Short])
+//          case "INTEGER" => newRow.setField(index ,v.asInstanceOf[Double])
+//          case "DOUBLE" => newRow.setField(index ,v.asInstanceOf[Double])
+//          case "FLOAT" => newRow.setField(index ,v.asInstanceOf[Float])
+//          case "LONG" => newRow.setField(index ,v.asInstanceOf[Long])
+//          case "CHAR" => newRow.setField(index ,v.asInstanceOf[Char])
+//          case "DATE" => newRow.setField(index ,v.asInstanceOf[Date])
+//          case "BOOLEAN" => newRow.setField(index ,v.asInstanceOf[Boolean])
+//          case "BIGINT" => newRow.setField(index ,v.asInstanceOf[java.math.BigInteger])
+//          case "BIGDEC" => newRow.setField(index ,v.asInstanceOf[java.math.BigDecimal])
+//          case "VOID" => newRow.setField(index ,v.asInstanceOf[Void])
+//          case _ => newRow.setField(index ,v.asInstanceOf[String])
+//        }
+        newRow.setField(index, v)
       }
       newRow
     })(new RowTypeInfo(types, fieldNames))
@@ -81,26 +84,28 @@ class JsonParserOperateSpec extends FlatSpec with Matchers{
 
     val persons: DataStream[String] = env.readTextFile("F:\\idea_workspace\\xlong\\xlong-examples\\datas\\persons.json")
     val types  = Array[TypeInformation[_]](
-      BasicTypeInfo.STRING_TYPE_INFO
+      Types.STRING
     )
     val names = Array[String](
       "text"
     )
-    implicit val tpe: TypeInformation[Row] = new RowTypeInfo(types, names)
-    val pee: DataStream[Row] = persons.map(line => Row.of(line))
+//    implicit val tpe: TypeInformation[Row] = new RowTypeInfo(types, names)
+//    val stringInfo: TypeInformation[String] = createTypeInformation[String]
+    val pee: DataStream[Row] = persons.map(line => Row.of(line))(Types.ROW_NAMED(names,types:_*))
     val jsonParserOp = new JsonParserOperate(env, Array[String]("memberId","name","gender","age","ocupation"),
-      Array[String]("STRING","STRING","STRING","INTEGER","STRING"))
+      Array[String]("STRING","STRING","STRING","DOUBLE","STRING"))
     val dataCollect = jsonParserOp.process(DataCollection(Array[String]("text"), Array[DataType.DataType](DataType.STRING), pee))
     dataCollect.getFieldNames.foreach(println)
     dataCollect.getFieldTypes.foreach(println)
 
     val ps = dataCollect.values.asInstanceOf[DataStream[Row]]
+    ps.print()
     tEnv.registerDataStream("persons",ps)
     val t: Table = tEnv.sqlQuery("SELECT avg(age) as age_avg,gender from persons GROUP BY gender")
     t.printSchema()
     val result = tEnv.toRetractStream(t)(new RowTypeInfo(Array[TypeInformation[_]](
-      BasicTypeInfo.INT_TYPE_INFO,BasicTypeInfo.STRING_TYPE_INFO), Array[String]("age_avg","gender")))
-    result.print()
+      BasicTypeInfo.DOUBLE_TYPE_INFO,BasicTypeInfo.STRING_TYPE_INFO), Array[String]("age_avg","gender")))
+    result.printToErr()
 //    ps.print()
 
     env.execute()
