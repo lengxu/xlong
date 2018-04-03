@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class PipelineNodeConfig implements Serializable{
     private String name;
-    private String type;
+    private String javaImplClass;
     private Integer nodeId;
     private List<Integer> prevNodeIds = new ArrayList<>();
     private Map<String,Object> nodeParameters = new HashMap<>();
@@ -26,14 +26,6 @@ public class PipelineNodeConfig implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Integer getNodeId() {
@@ -60,22 +52,30 @@ public class PipelineNodeConfig implements Serializable{
         this.nodeParameters = nodeParameters;
     }
 
-    public PipelineNodeConfig(String name, String type, Integer nodeId, List<Integer> prevNodeIds, Map<String, Object> nodeParameters) {
-        this.name = name;
-        this.type = type;
-        this.nodeId = nodeId;
-        this.prevNodeIds = prevNodeIds;
-        this.nodeParameters = nodeParameters;
+    public String getJavaImplClass() {
+        return javaImplClass;
+    }
+
+    public void setJavaImplClass(String javaImplClass) {
+        this.javaImplClass = javaImplClass;
     }
 
     public PipelineNodeConfig() {
+    }
+
+    public PipelineNodeConfig(String name, String javaImplClass, Integer nodeId, List<Integer> prevNodeIds, Map<String, Object> nodeParameters) {
+        this.name = name;
+        this.javaImplClass = javaImplClass;
+        this.nodeId = nodeId;
+        this.prevNodeIds = prevNodeIds;
+        this.nodeParameters = nodeParameters;
     }
 
     @Override
     public String toString() {
         return "PipelineNodeConfig{" +
                 "name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                ", javaImplClass='" + javaImplClass + '\'' +
                 ", nodeId=" + nodeId +
                 ", prevNodeIds=" + prevNodeIds +
                 ", nodeParameters=" + nodeParameters +

@@ -16,8 +16,6 @@ trait PipelineNode extends Comparable[PipelineNode] with NamedComponent with Ord
   protected var name:String = _
   protected var nodeId:Int = _
   protected var prevNodeIds:java.util.List[Integer] = _
-  protected var pipelineNodeCategory:PipelineNodeCategory = _
-
 
   override def setName(name: String): Unit = {
     this.name = name
@@ -36,11 +34,7 @@ trait PipelineNode extends Comparable[PipelineNode] with NamedComponent with Ord
     this.prevNodeIds = prevIds
   }
 
-  def setPipelineNodeCategory(pipelineNodeCategory:PipelineNodeCategory )={
-    this.pipelineNodeCategory = pipelineNodeCategory
-  }
-
-  def getPipelineNodeCategory(): PipelineNodeCategory = pipelineNodeCategory
+  def getPipelineNodeCategory(): PipelineNodeCategory
 
 
   override def compareTo(o: PipelineNode): Int = {
@@ -51,7 +45,7 @@ trait PipelineNode extends Comparable[PipelineNode] with NamedComponent with Ord
     * 验证并配置节点参数
     * @param nodeParameters
     */
-  def configure(nodeParameters: java.util.Map[String,Object], pipelineNodeParameters: List[PipelineNodeParameter]):Unit
+  def configure(nodeParameters: java.util.Map[String,Object]):Unit
 
   /**
     * 解析操作步骤

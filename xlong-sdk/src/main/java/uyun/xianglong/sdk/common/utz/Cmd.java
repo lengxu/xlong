@@ -13,9 +13,6 @@ public class Cmd {
                 Option.builder("f").hasArg().longOpt("appConfigFile").desc("App Config File Path").build());
         options.addOption(
                 Option.builder("s").hasArg().longOpt("appConfigString").desc("App Config String").build());
-        options.addOption(
-                Option.builder("p").hasArg().longOpt("parameterDefinitionFilePath").desc("App Component parameter definition file path").build()
-        );
         CommandLine cmd = null;
         try {
             cmd = new DefaultParser().parse(options, args);

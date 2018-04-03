@@ -2,9 +2,6 @@ package uyun.xianglong.sdk.node
 
 import java.util
 
-import com.google.common.base.Preconditions
-import org.slf4j.LoggerFactory
-
 /**
   * Created By wuhuahe
   * author : 游龙
@@ -14,30 +11,35 @@ import org.slf4j.LoggerFactory
   */
 object PipelineNodeFactory {
 
-  @throws[PipelineNodeException]
-  def create(nodeId: Int, prevNodeIds: util.List[Integer], pipelineNodeCategory: String, nodeName: String, tpye: String): PipelineNode = {
+  @throws[RuntimeException]
+  def create(
+              nodeName: String,
+              tpye: String,
+              nodeId: Int,
+              prevNodeIds: util.List[Integer],
+              nodeParameters: java.util.Map[String,Object]): PipelineNode = {
     val nodeClass: Class[_ <: PipelineNode] = getClass(tpye)
     try {
       val pipelineNode: PipelineNode = nodeClass.newInstance
       pipelineNode.setId(nodeId)
       pipelineNode.setPrevIds(prevNodeIds)
-      pipelineNode.setPipelineNodeCategory(PipelineNodeCategory.getPipelineNodeCategory(pipelineNodeCategory))
       pipelineNode.setName(nodeName)
+      pipelineNode.configure(nodeParameters)
       pipelineNode
     } catch {
       case ex: Exception =>
-        throw new PipelineNodeException("Unable to create PipelineNode: type: " + tpye + ", class: " + nodeClass.getName, ex)
+        throw new RuntimeException("Unable to create PipelineNode: type: " + tpye + ", class: " + nodeClass.getName, ex)
     }
   }
 
-  @throws[PipelineNodeException]
+  @throws[RuntimeException]
   private def getClass(`type`: String): Class[_ <: PipelineNode] = {
     val nodeClassName = `type`
     try
       Class.forName(nodeClassName).asInstanceOf[Class[_ <: PipelineNode]]
     catch {
       case ex: Exception =>
-        throw new PipelineNodeException("Unable to load PipelineNode type: " + `type` + ", class: " + nodeClassName, ex)
+        throw new RuntimeException("Unable to load PipelineNode type: " + `type` + ", class: " + nodeClassName, ex)
     }
   }
 }

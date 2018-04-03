@@ -1,0 +1,77 @@
+{
+  "name": "examplePipeline",
+  "runnerParameters": {
+    "flink.parameter.aaa":"vvv",
+    "flink.parameter.bbb":true,
+    "flink.parameter.ccc": 12,
+    "flink.parameter.rate": 34.56
+  },
+  "nodes": [
+    {
+      "name":"uyun指标数据输入",
+      "javaImplClass": "uyun.xianglong.sdk.pipeline.test.KafkaJsonInputOpExample",
+      "nodeId":1,
+      "prevNodeIds":[-1],
+      "nodeParameters":{
+        "bootstrap.servers":"10.1.61.106:9192",
+        "group.id":"consumerGroup1",
+        "topic":"metrics",
+        "outputDatasetName":"CONSUME"
+      }
+    },
+    {
+      "name":"uyun资源数据输入",
+      "javaImplClass": "uyun.xianglong.sdk.pipeline.test.KafkaJsonInputOpExample",
+      "nodeId":2,
+      "prevNodeIds":[-1],
+      "nodeParameters":{
+        "bootstrap.servers":"10.1.61.106:9192",
+        "group.id":"consumerGroup2",
+        "topic":"resources",
+        "outputDatasetName":"CONSUME"
+      }
+    },
+    {
+      "name":"资源数据与指标数据关联",
+      "javaImplClass": "uyun.xianglong.sdk.pipeline.test.JoinOperator",
+      "nodeId":3,
+      "prevNodeIds":[1,2],
+      "nodeParameters":{
+        "joinType":"innerJoin",
+        "joinCondition":[
+          {
+            "leftDatasetField":"resourceId",
+            "rightDatasetField":"resourceId",
+            "relation":"="
+          },
+          {
+            "leftDatasetField":"resourceId2",
+            "rightDatasetField":"resourceId",
+            "relation":"="
+          }
+        ]
+      }
+    },
+    {
+      "name":"自定义sql查询操作",
+      "javaImplClass": "uyun.xianglong.sdk.pipeline.test.SqlOperatorExample",
+      "nodeId":4,
+      "prevNodeIds":[3],
+      "nodeParameters":{
+        "sql":"SELECT name,value FROM metrics",
+        "outputDatasetName":"selectResult"
+      }
+    },
+    {
+      "name":"客户信息聚合分析结果kakfa输出",
+      "javaImplClass": "uyun.xianglong.sdk.pipeline.test.KafkaJsonOutputOpExample",
+      "nodeId":5,
+      "prevNodeIds":[4],
+      "nodeParameters":{
+        "bootstrap.servers":"10.1.61.106:9192",
+        "topic":"c",
+        "outputDatasetName":"RESULT"
+      }
+    }
+  ]
+}

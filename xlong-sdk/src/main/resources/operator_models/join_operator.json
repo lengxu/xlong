@@ -1,0 +1,71 @@
+{
+  "type": "JoinOperator",
+  "visualName":"数据关联",
+  "icon": "images/join.png",
+  "visualType":"数据关联",
+  "pipelineNodeImplClass": "uyun.xianglong.sdk.operator.JoinOperator",
+  "builtinParameters":[
+    {
+      "code": "nodeId",
+      "label":"节点id号",
+      "desc": "",
+      "valueType": "int",
+      "parameters": {"min": 1, "max": 500,"isRequired":true}
+    },
+    {
+      "code": "prevNodeIds",
+      "label":"前节点id号列表",
+      "desc": "前节点id号列表,根据用户连线选择, -1表示该节点前面没有节点",
+      "valueType": "intList",
+      "parameters": {"default":[-1],"isRequired":true}
+    }
+  ],
+  "externalParameters": [
+    {
+      "code": "name",
+      "label": "操作名称",
+      "desc":"",
+      "type": "singleRowText",
+      "parameters": {"minLength":1,"maxLength":500,"isRequired":true}
+    },
+    {
+      "code": "joinType",
+      "label":"关联类型",
+      "desc": "innerJoin - 内关联|leftOuterJoin - 左关联|rightOuterJoin - 右关联 ",
+      "type": "singleSel",
+      "parameters": {"color":false,"options":[{"default":true,"name":"内联","code":"innerJoin"},{"default":false,"name":"左联","code":"leftOuterJoin"},{"default":false,"name":"右联","code":" "}]}
+    },
+    {
+      "code": "joinCondition",
+      "label": "关联条件",
+      "desc":"json集合对象",
+      "type": "nestedElement",
+      "parameters":{
+        "subElement":[
+          {
+            "code":"leftDatasetField",
+            "label":"上数据集关联字段",
+            "desc":"下拉选择前节点数据集字段",
+            "type":"inferredListSel",
+            "parameters":{}
+          },
+          {
+            "code":"rightDatasetField",
+            "label":"下数据集关联字段",
+            "desc":"下拉选择前节点数据集字段",
+            "type":"inferredListSel",
+            "parameters":{}
+          },
+          {
+            "code":"relation",
+            "label":"比较符",
+            "desc":"左数据集字段与右数据集字段关联比较符",
+            "type":"listSel",
+            "parameters":{"color":false,"options":[{"default":true,"name":"=","code":"equal"}]}
+          }
+        ],
+        "canAddable":true
+      }
+    }
+  ]
+}

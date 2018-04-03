@@ -2,7 +2,6 @@ package uyun.xianglong.sdk.pipeline;
 
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
-import uyun.xianglong.sdk.node.PipelineNodeConfigModel;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -99,17 +98,5 @@ public class PipelineConfig implements Serializable{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void validatePipelineNodeConfig(Map<String, PipelineNodeConfigModel> pipelineNodeConfigModels){
-        List<PipelineNodeConfig> nodes = this.getNodes();
-        nodes.stream().forEach(node ->{
-            String type = node.getType();
-            PipelineNodeConfigModel pipelineNodeConfigModel = pipelineNodeConfigModels.get(type);
-            if(pipelineNodeConfigModel == null){
-                throw new RuntimeException("the type [" + type + "] has not a config model.");
-            }
-
-        });
     }
 }

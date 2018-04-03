@@ -1,0 +1,46 @@
+{
+  "type": "SqlOperator",
+  "visualName":"sql操作",
+  "icon": "images/sql.png",
+  "visualType":"SQL",
+  "pipelineNodeImplClass": "uyun.xianglong.sdk.operator.JoinOperator",
+  "builtinParameters":[
+    {
+      "code": "nodeId",
+      "label":"节点id号",
+      "desc": "",
+      "valueType": "int",
+      "parameters": {"min": 1, "max": 500,"isRequired":true}
+    },
+    {
+      "code": "prevNodeIds",
+      "label":"前节点id号列表",
+      "desc": "前节点id号列表,根据用户连线选择, -1表示该节点前面没有节点",
+      "valueType": "intList",
+      "parameters": {"default":[-1],"isRequired":true}
+    }
+  ],
+  "externalParameters": [
+    {
+      "code": "name",
+      "label": "操作名称",
+      "desc":"",
+      "type": "singleRowText",
+      "parameters": {"minLength":1,"maxLength":500,"isRequired":true}
+    },
+    {
+      "code": "sql",
+      "label":"sql语句",
+      "desc": "自定义sql语句",
+      "type": "richText",
+      "parameters": {"isRequired":true}
+    },
+    {
+      "code": "outputDatasetName",
+      "label":"输出数据集名称",
+      "desc": "输出数据集名称",
+      "type": "singleRowText",
+      "parameters": {"minLength":1,"maxLength":500,"isRequired":true,"validation":"[A-Za-z]"}
+    }
+  ]
+}
