@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class AppControllerTest {
+public class TaskControllerTest {
 
     String baseUrl = "http://localhost:8080";
 
