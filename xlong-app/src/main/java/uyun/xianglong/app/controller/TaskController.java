@@ -1,23 +1,17 @@
 package uyun.xianglong.app.controller;
 
-
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uyun.xianglong.app.message.*;
 
-import java.io.File;
-import java.lang.reflect.Type;
-import java.util.List;
-
+@CrossOrigin
 @RestController
-public class AppController {
+public class TaskController {
 
     String baseUrl = "http://10.1.62.236:8081";
     Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES).create();
@@ -94,12 +88,6 @@ public class AppController {
         String res = restGet("/jobs/" + jobid);
         return res;
     }
-
-//    @GetMapping(value = "/jobs/{jobid}/exceptions")
-//    Object jobExceptions(@PathVariable("jobid") String jobid) {
-//        String res = restGet("jobs");
-//        return res;
-//    }
 
     @DeleteMapping(value = "/jobs/{jobid}/cancel")
     String cancelJob(@PathVariable("jobid") String jobid) {
