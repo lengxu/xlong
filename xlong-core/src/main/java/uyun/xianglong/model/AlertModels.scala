@@ -6,23 +6,22 @@ object AlertModels {
 
   /**
     *
-    * @param id           告警id
-    * @param ticketId     工单id
-    * @param resId        资源id
-    * @param name         告警名称
-    * @param severity     告警优先级
-    * @param description  告警描述
-    * @param source       告警来源
-    * @param occurTime    告警发生时间
-    * @param tags         告警标签
-    * @param autoStatus   自动修复状态
-    * @param fromState    告警变更前状态
-    * @param toState      告警变更后状态
-    * @param executor     告警处理人
-    * @param closeMessage 关闭理由,系统提供了三种(故障已解决,计划停机,监控系统误报),允许填自定义的消息
-    * @param processTime  告警开始处理时间 //这三个处理人相关时间可以考虑合并
-    * @param resolveTime  告警解决时间
-    * @param closeTime    告警关闭时间
+    * @param id              告警id
+    * @param ticketId        工单id
+    * @param resId           资源id
+    * @param name            告警名称
+    * @param severity        告警优先级
+    * @param description     告警描述
+    * @param source          告警来源
+    * @param occurTime       告警发生时间
+    * @param tags            告警标签
+    * @param autoStatus      自动修复状态
+    * @param fromState       告警变更前状态
+    * @param toState         告警变更后状态
+    * @param executorId      告警处理人id
+    * @param executorName    告警处理人姓名
+    * @param closeMessage    关闭理由,系统提供了三种(故障已解决,计划停机,监控系统误报),允许填自定义的消息
+    * @param stateChangeTime 状态变更时间
     */
   case class AlertInput(
                          id: String,
@@ -36,12 +35,11 @@ object AlertModels {
                          tags: Map[String, String],
                          fromState: Int,
                          toState: Int,
+                         stateChangeTime: Timestamp,
                          autoStatus: Int,
-                         executor: String,
-                         processTime: Timestamp,
-                         resolveTime: Timestamp,
-                         closeMessage: String,
-                         closeTime: Timestamp
+                         executorId: String,
+                         executorName: String,
+                         closeMessage: String
                        )
 
   /**
@@ -56,7 +54,8 @@ object AlertModels {
     * @param firstOccurTime   首次发生时间
     * @param lastOccurTime    最后发生时间
     * @param tags             告警tags
-    * @param executor         告警处理人
+    * @param executorId       告警处理人id
+    * @param executorName     告警处理人姓名
     * @param state            告警状态
     * @param processTime      告警开始处理时间
     * @param resolveTime      告警解决时间
@@ -80,7 +79,8 @@ object AlertModels {
                          firstOccurTime: Timestamp,
                          lastOccurTime: Timestamp,
                          tags: Map[String, String],
-                         executor: String,
+                         executorId: String,
+                         executorName: String,
                          state: Int,
                          processTime: Timestamp,
                          resolveTime: Timestamp,
