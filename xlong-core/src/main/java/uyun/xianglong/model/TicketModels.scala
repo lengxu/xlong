@@ -17,7 +17,7 @@ object TicketModels {
     * @param executorName    处理人姓名
     * @param priority        工单优先级(内置字段之一,但是必填)
     * @param expiredTime     工单逾期时间
-    * @param innerFields     工单内置字段
+    * @param innerFields     工单内置字段,元数据信息见[[metadata/ticket.inner.fields.json]]
     * @param userFields      工单用户自定义字段
     */
   case class TicketInput(

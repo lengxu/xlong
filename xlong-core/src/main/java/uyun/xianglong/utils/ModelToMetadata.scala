@@ -4,16 +4,14 @@ import java.io.{File, FileInputStream}
 
 import com.google.common.io.Files
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
-import org.slf4j.LoggerFactory
-import uyun.xianglong.metadata.MetricNames.{DeviceGroup, Metric, MetricGroup}
-import uyun.xianglong.metadata.ResourceFields.ResourceAttribute
 import org.json4s.DefaultFormats
 import org.json4s.Extraction._
 import org.json4s.jackson.JsonMethods._
+import uyun.xianglong.metadata.MetricNames.{DeviceGroup, Metric, MetricGroup}
+import uyun.xianglong.metadata.ResourceFields.ResourceAttribute
 import uyun.xianglong.metadata.TicketInnerFields.TicketField
 
 import scala.collection.mutable
-import scala.io.Source
 import scala.xml.XML
 
 object ModelToMetadata {

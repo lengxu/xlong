@@ -8,7 +8,7 @@ object MetricModels {
     *
     * @param id         事件id
     * @param resId      资源id
-    * @param name       指标名
+    * @param name       指标名,元数据信息见[[metadata/metric.names.json]]
     * @param value      指标值
     * @param tags       指标tags
     * @param metricTime 指标时间
