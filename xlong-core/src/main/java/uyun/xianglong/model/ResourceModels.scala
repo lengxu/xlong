@@ -13,7 +13,7 @@ object ResourceModels {
     * @param id         资源id
     * @param name       资源名称
     * @param resType    资源类型
-    * @param fields     资源属性
+    * @param fields     资源属性,元数据信息见[[metadata/resource.fields.json]]
     * @param tags       资源tag
     * @param extension  资源扩展字段
     * @param sources    资源数据源
@@ -37,7 +37,7 @@ object ResourceModels {
     * @param id              资源id
     * @param name            资源名称
     * @param resType         资源类型
-    * @param fields          资源属性
+    * @param fields          资源属性,元数据信息见[[metadata/resource.fields.json]]
     * @param tags            资源tag
     * @param isClaimed       是否认领,目前当`extension.CMDB.circleId`不为null/"0"时为true,其他为false
     * @param isAutomatic     是否自动,目前当`sources`中包含code为"user"的`Source`对象时为false

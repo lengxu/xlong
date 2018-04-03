@@ -1,0 +1,194 @@
+[
+  {
+    "name": "工单标题",
+    "code": "title",
+    "type": "singleRowText",
+    "typeDesc": "单行文本"
+  },
+  {
+    "name": "优先级",
+    "code": "urgentLevel",
+    "type": "singleSel",
+    "typeDesc": "单选"
+  },
+  {
+    "name": "附件",
+    "code": "file",
+    "type": "attachfile",
+    "typeDesc": "附件"
+  },
+  {
+    "name": "配置项",
+    "code": "resource",
+    "type": "resource",
+    "typeDesc": "配置项"
+  },
+  {
+    "name": "工单描述",
+    "code": "ticketDesc",
+    "type": "multiRowText",
+    "typeDesc": "多行文本"
+  },
+  {
+    "name": "资源类型",
+    "code": "layer",
+    "type": "layer",
+    "typeDesc": "资源类型"
+  },
+  {
+    "name": "业务系统",
+    "code": "business",
+    "type": "business",
+    "typeDesc": "业务系统"
+  },
+  {
+    "name": "报告人",
+    "code": "announcer",
+    "type": "singleRowText",
+    "typeDesc": "单行文本"
+  },
+  {
+    "name": "上线时间",
+    "code": "releaseTime",
+    "type": "dateTime",
+    "typeDesc": "日期时间"
+  },
+  {
+    "name": "上线结果",
+    "code": "releaseResult",
+    "type": "listSel",
+    "typeDesc": "下拉菜单"
+  },
+  {
+    "name": "满意度",
+    "code": "score",
+    "type": "singleSel",
+    "typeDesc": "单选"
+  },
+  {
+    "name": "关闭时间",
+    "code": "closeTime",
+    "type": "dateTime",
+    "typeDesc": "日期时间"
+  },
+  {
+    "name": "实施结果",
+    "code": "implementResult",
+    "type": "listSel",
+    "typeDesc": "下拉菜单"
+  },
+  {
+    "name": "创建时间",
+    "code": "startTime",
+    "type": "dateTime",
+    "typeDesc": "日期时间"
+  },
+  {
+    "name": "变更结果",
+    "code": "chgResult",
+    "type": "listSel",
+    "typeDesc": "下拉菜单"
+  },
+  {
+    "name": "解决人",
+    "code": "solver",
+    "type": "singleRowText",
+    "typeDesc": "单行文本"
+  },
+  {
+    "name": "变更经理",
+    "code": "chgManager",
+    "type": "user",
+    "typeDesc": "人员"
+  },
+  {
+    "name": "事件类型",
+    "code": "inCategory",
+    "type": "listSel",
+    "typeDesc": "下拉菜单"
+  },
+  {
+    "name": "变更类型",
+    "code": "chgCategory",
+    "type": "listSel",
+    "typeDesc": "下拉菜单"
+  },
+  {
+    "name": "关闭人",
+    "code": "closer",
+    "type": "singleRowText",
+    "typeDesc": "单行文本"
+  },
+  {
+    "name": "解决结果",
+    "code": "solveResult",
+    "type": "singleSel",
+    "typeDesc": "单选"
+  },
+  {
+    "name": "解决方案",
+    "code": "solvent",
+    "type": "multiRowText",
+    "typeDesc": "多行文本"
+  },
+  {
+    "name": "测试结果",
+    "code": "testResult",
+    "type": "listSel",
+    "typeDesc": "下拉菜单"
+  },
+  {
+    "name": "重要程度",
+    "code": "importance",
+    "type": "singleSel",
+    "typeDesc": "单选"
+  },
+  {
+    "name": "评估意见",
+    "code": "evaluation",
+    "type": "multiRowText",
+    "typeDesc": "多行文本"
+  },
+  {
+    "name": "紧急程度",
+    "code": "urgency",
+    "type": "singleSel",
+    "typeDesc": "单选"
+  },
+  {
+    "name": "解决时间",
+    "code": "solvingTime",
+    "type": "dateTime",
+    "typeDesc": "日期时间"
+  },
+  {
+    "name": "邮箱",
+    "code": "email",
+    "type": "singleRowText",
+    "typeDesc": "单行文本"
+  },
+  {
+    "name": "问题原因",
+    "code": "problemReason",
+    "type": "multiRowText",
+    "typeDesc": "多行文本"
+  },
+  {
+    "name": "请求人",
+    "code": "requester",
+    "type": "singleRowText",
+    "typeDesc": "单行文本"
+  },
+  {
+    "name": "审核意见",
+    "code": "auditOpinion",
+    "type": "multiRowText",
+    "typeDesc": "多行文本"
+  },
+  {
+    "name": "手机号",
+    "code": "phone",
+    "type": "singleRowText",
+    "typeDesc": "单行文本"
+  }
+]
