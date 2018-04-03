@@ -7,7 +7,6 @@ object MetricModels {
   case class MetricInput(
                           id: String,
                           resId: String,
-                          name: String,
                           value: Double,
                           tags: Map[String, String],
                           metricTime: Timestamp
