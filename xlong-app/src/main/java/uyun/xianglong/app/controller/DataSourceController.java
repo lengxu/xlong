@@ -1,46 +1,53 @@
 package uyun.xianglong.app.controller;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+import uyun.xianglong.app.input.JdbcInfo;
+import uyun.xianglong.app.input.KafkaInfo;
+import uyun.xianglong.app.input.ZabbixInfo;
 
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/source")
 public class DataSourceController {
 
+    @ApiOperation(value = "", notes = "更新的时候带id 新建的时候不用带id")
     @PostMapping(value = "/save-source-kafka")
-    Object saveKafka(Object input) {
+    Object saveKafka(KafkaInfo input) {
         String res = "ok";
         return res;
     }
 
     @GetMapping(value = "/get-source-kafka")
-    Object getKafka(Object input) {
+    KafkaInfo getKafka(KafkaInfo input) {
         String res = "ok";
-        return res;
+        return new KafkaInfo();
     }
 
+    @ApiOperation(value = "", notes = "更新的时候带id 新建的时候不用带id")
     @PostMapping(value = "/save-source-zabbix")
-    Object saveZabbix(Object input) {
+    Object saveZabbix(ZabbixInfo input) {
         String res = "ok";
         return res;
     }
 
     @GetMapping(value = "/get-source-zabbix")
-    Object getZabbix(Object input) {
+    ZabbixInfo getZabbix(ZabbixInfo input) {
         String res = "ok";
-        return res;
+        return new ZabbixInfo();
     }
 
+    @ApiOperation(value = "", notes = "更新的时候带id 新建的时候不用带id")
     @PostMapping(value = "/save-source-jdbc")
-    Object saveJdbc(Object input) {
+    Object saveJdbc(JdbcInfo input) {
         String res = "ok";
         return res;
     }
 
     @GetMapping(value = "/get-source-jdbc")
-    Object getJdbc(Object input) {
+    JdbcInfo getJdbc(JdbcInfo input) {
         String res = "ok";
-        return res;
+        return new JdbcInfo();
     }
 
 }
