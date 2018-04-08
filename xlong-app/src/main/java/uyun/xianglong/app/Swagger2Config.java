@@ -17,7 +17,7 @@ public class Swagger2Config {
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
-                        .title("Appsliving API")
+                        .title("HDAP API")
                         .description("接口中所有参数默认不能为空")
                         .termsOfServiceUrl("http://localost:8080")
                         .version("1.0")
